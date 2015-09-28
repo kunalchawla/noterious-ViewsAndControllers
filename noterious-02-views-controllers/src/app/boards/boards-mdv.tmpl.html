@@ -1,0 +1,58 @@
+<div class="col-sm-4">
+  <div class="boards">
+      <!-- HINT: Don't forget to hook up your ng-repeat element
+      to ctrl.setEditedBoard via ng-click – that way, you will
+      be able to actually see the editing form when you click on a board.
+      -->
+    <div class="simple-board" ng-repeat="(boardId, board) in ctrl.boards" 
+    ng-click="ctrl.setEditedBoard(boardId, board)">
+        <h3>{{board.title}}</h3>
+        <h5>{{board.description}}</h5>
+        <input type="checkbox" ng-model="model.isPublic"/> Is Public?
+    </div>
+
+  </div>
+</div>
+<div class="col-sm-8">
+  <!-- CREATING -->
+  <div ng-if="!ctrl.isEditing" class="col-xs-12 board-details">
+    <h3>Create a New Board</h3>
+    <hr/>
+    <form name="ctrl.createForm" class="create-form" role="form" novalidate 
+    ng-submit="ctrl.createBoard(ctrl.newBoard, ctrl.createForm.$valid)">
+        <div class="form-group">
+          <label for="boardTitle">Board Title</label><br/>
+          <input type="text" id="boardTitle" ng-model="ctrl.newBoard.title" placeholder="Enter title" required="true">
+        </div>
+        <div class="form-group">
+          <label for="boardDescription">Board Description</label><br/>
+          <input type="text" id="boardDescription" ng-model="ctrl.newBoard.description" placeholder="Enter Description">
+        </div>
+        <input type="checkbox" ng-model="ctrl.newBoard.isPublic"/>Is Public?<br/>
+        <button type="submit">Create</button>
+    </form>
+  </div>
+  <!-- EDITING -->
+  <div ng-if="ctrl.isEditing" class="col-xs-12 board-details">
+    <h3>Editing {{ ctrl.editedBoard.title }}</h3>
+    <hr/>
+    <form
+      name="ctrl.updateForm"
+      class="edit-form"
+      role="form"
+      ng-submit="ctrl.updateBoard(ctrl.editedBoardId, ctrl.editedBoard, ctrl.updateForm.$valid)"
+      novalidate>
+        <div class="form-group">
+          <label for="editBoardTitle">Board Title</label><br/>
+          <input type="text" id="editBoardTitle" ng-model="ctrl.editedBoard.title" placeholder="Enter title" required="true">
+        </div>
+        <div class="form-group">
+          <label for="editBoardDescription">Board Description</label><br/>
+          <input type="text" id="editBoardDescription" ng-model="ctrl.editedBoard.description" placeholder="Enter Description">
+        </div>
+        <input type="checkbox" ng-model="ctrl.editedBoard.isPublic"/>Is Public?<br/>
+        <button type="submit">Edit</button>
+        <button type="button" ng-click="ctrl.cancelEditing()">Cancel</button>
+    </form>
+  </div>
+</div>
